@@ -45,8 +45,18 @@ ssh.on("ready", function () {
 
       //_________________________________________________________________________________________________________________________
 
-      app.get("/skill", (req, res) => {
+      app.get("/skillType", (req, res) => {
         db_mysql.query("SELECT * FROM B01_skills_type", (err, result) => {
+          if (err) {
+            console.log(err);
+          } else {
+            res.send(result);
+          }
+        });
+      });
+
+      app.get("/skillTopic", (req, res) => {
+        db_mysql.query("SELECT * FROM B02_skills_topic", (err, result) => {
           if (err) {
             console.log(err);
           } else {
