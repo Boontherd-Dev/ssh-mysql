@@ -43,7 +43,62 @@ ssh.on("ready", function () {
       sqlConf.stream = stream;
       var db_mysql = mysql2.createConnection(sqlConf);
 
+      var A01_personal_info;
+      var A02_experience;
+
+      db_mysql.query("SELECT * FROM A01_personal_info", (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          A01_personal_info = result;
+        }
+      });
+      db_mysql.query("SELECT * FROM A02_experience", (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          A02_experience = result;
+        }
+      });
+
       //_________________________________________________________________________________________________________________________
+
+      app.get("/info", (req, res) => {
+        res.send({
+          A01_personal_info: A01_personal_info,
+          A02_experience: A02_experience,
+        });
+      });
+
+      app.get("/profile/personalInfo", (req, res) => {
+        db_mysql.query("SELECT * FROM A01_personal_info", (err, result) => {
+          if (err) {
+            console.log(err);
+          } else {
+            res.send(result);
+          }
+        });
+      });
+
+      app.get("/profile/exp", (req, res) => {
+        db_mysql.query("SELECT * FROM A02_experience", (err, result) => {
+          if (err) {
+            console.log(err);
+          } else {
+            res.send(result);
+          }
+        });
+      });
+
+      app.get("/profile/edu", (req, res) => {
+        db_mysql.query("SELECT * FROM A03_education", (err, result) => {
+          if (err) {
+            console.log(err);
+          } else {
+            res.send(result);
+          }
+        });
+      });
 
       app.get("/skill/type", (req, res) => {
         db_mysql.query("SELECT * FROM B01_skills_type", (err, result) => {
