@@ -45,6 +45,10 @@ ssh.on("ready", function () {
 
       var A01_personal_info;
       var A02_experience;
+      var A03_education;
+      var B01_skills_type;
+      var B02_skills_topic;
+      var B03_skills_info;
 
       db_mysql.query("SELECT * FROM A01_personal_info", (err, result) => {
         if (err) {
@@ -60,75 +64,111 @@ ssh.on("ready", function () {
           A02_experience = result;
         }
       });
+      db_mysql.query("SELECT * FROM A03_education", (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          A03_education = result;
+        }
+      });
+      db_mysql.query("SELECT * FROM B01_skills_type", (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          B01_skills_type = result;
+        }
+      });
+      db_mysql.query("SELECT * FROM B02_skills_topic", (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          B02_skills_topic = result;
+        }
+      });
+      db_mysql.query("SELECT * FROM B03_skills_info", (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          B03_skills_info = result;
+        }
+      });
 
       //_________________________________________________________________________________________________________________________
 
       app.get("/info", (req, res) => {
         res.send({
-          A01_personal_info: A01_personal_info,
-          A02_experience: A02_experience,
+          A_profile: {
+            A01_personal_info: A01_personal_info,
+            A02_experience: A02_experience,
+            A03_education: A03_education,
+          },
+          B_skills: {
+            B01_skills_type: B01_skills_type,
+            B02_skills_topic: B02_skills_topic,
+            B03_skills_info: B03_skills_info,
+          },
         });
       });
 
-      app.get("/profile/personalInfo", (req, res) => {
-        db_mysql.query("SELECT * FROM A01_personal_info", (err, result) => {
-          if (err) {
-            console.log(err);
-          } else {
-            res.send(result);
-          }
-        });
-      });
+      // app.get("/profile/personalInfo", (req, res) => {
+      //   db_mysql.query("SELECT * FROM A01_personal_info", (err, result) => {
+      //     if (err) {
+      //       console.log(err);
+      //     } else {
+      //       res.send(result);
+      //     }
+      //   });
+      // });
 
-      app.get("/profile/exp", (req, res) => {
-        db_mysql.query("SELECT * FROM A02_experience", (err, result) => {
-          if (err) {
-            console.log(err);
-          } else {
-            res.send(result);
-          }
-        });
-      });
+      // app.get("/profile/exp", (req, res) => {
+      //   db_mysql.query("SELECT * FROM A02_experience", (err, result) => {
+      //     if (err) {
+      //       console.log(err);
+      //     } else {
+      //       res.send(result);
+      //     }
+      //   });
+      // });
 
-      app.get("/profile/edu", (req, res) => {
-        db_mysql.query("SELECT * FROM A03_education", (err, result) => {
-          if (err) {
-            console.log(err);
-          } else {
-            res.send(result);
-          }
-        });
-      });
+      // app.get("/profile/edu", (req, res) => {
+      //   db_mysql.query("SELECT * FROM A03_education", (err, result) => {
+      //     if (err) {
+      //       console.log(err);
+      //     } else {
+      //       res.send(result);
+      //     }
+      //   });
+      // });
 
-      app.get("/skill/type", (req, res) => {
-        db_mysql.query("SELECT * FROM B01_skills_type", (err, result) => {
-          if (err) {
-            console.log(err);
-          } else {
-            res.send(result);
-          }
-        });
-      });
+      // app.get("/skill/type", (req, res) => {
+      //   db_mysql.query("SELECT * FROM B01_skills_type", (err, result) => {
+      //     if (err) {
+      //       console.log(err);
+      //     } else {
+      //       res.send(result);
+      //     }
+      //   });
+      // });
 
-      app.get("/skill/topic", (req, res) => {
-        db_mysql.query("SELECT * FROM B02_skills_topic", (err, result) => {
-          if (err) {
-            console.log(err);
-          } else {
-            res.send(result);
-          }
-        });
-      });
+      // app.get("/skill/topic", (req, res) => {
+      //   db_mysql.query("SELECT * FROM B02_skills_topic", (err, result) => {
+      //     if (err) {
+      //       console.log(err);
+      //     } else {
+      //       res.send(result);
+      //     }
+      //   });
+      // });
 
-      app.get("/skill/info", (req, res) => {
-        db_mysql.query("SELECT * FROM B03_skills_info", (err, result) => {
-          if (err) {
-            console.log(err);
-          } else {
-            res.send(result);
-          }
-        });
-      });
+      // app.get("/skill/info", (req, res) => {
+      //   db_mysql.query("SELECT * FROM B03_skills_info", (err, result) => {
+      //     if (err) {
+      //       console.log(err);
+      //     } else {
+      //       res.send(result);
+      //     }
+      //   });
+      // });
 
       //_________________________________________________________________________________________________________________________
       // now use `db` to make your queries
